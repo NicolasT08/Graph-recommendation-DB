@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   neo4j_db:
     image: neo4j:5.26
@@ -14,7 +12,6 @@ services:
       - ./neo4j/data:/data
       - ./neo4j/logs:/logs
       - ./neo4j/import:/var/lib/neo4j/import
-      - ./neo4j/init.sh:/var/lib/neo4j/init.sh
       - ./neo4j/plugins:/plugins
-    entrypoint: ["/var/lib/neo4j/init.sh"]
-
+      - ./neo4j/init.sh:/tmp/init.sh
+    entrypoint: ["bash", "/tmp/init.sh"]
