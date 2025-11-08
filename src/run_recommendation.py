@@ -25,6 +25,43 @@ def obtener_contexto(rec, estudianteId):
         "listaCursosInteres": r.get("listaCursosInteres") or []
     }
 
+def obtener_contexto_completo(rec, estudianteId):
+    # Consulta para obtener semestre, cursos tomados e intereses con información completa
+    q = """
+    MATCH (e:Estudiante {id: $estudianteId})
+    OPTIONAL MATCH (e)-[:HA_TOMADO]->(c_t:Curso)
+    OPTIONAL MATCH (e)-[:LE_INTERESA]->(c_i:Curso)
+    OPTIONAL MATCH (e)-[:PERTENECE_A]->(s:Semestre)
+    RETURN s.id AS semestreId,
+           COLLECT(DISTINCT {
+               id: c_t.id,
+               nombre: c_t.nombre,
+               area: c_t.area,
+               nivel: c_t.nivel,
+               creditos: c_t.creditos
+           }) AS listaCursosTomados,
+           COLLECT(DISTINCT {
+               id: c_i.id,
+               nombre: c_i.nombre,
+               area: c_i.area,
+               nivel: c_i.nivel,
+               creditos: c_i.creditos
+           }) AS listaCursosInteres
+    """
+    res = rec.conn.query(q, {"estudianteId": estudianteId})
+    if not res:
+        return {"semestreId": None, "listaCursosTomados": [], "listaCursosInteres": []}
+    r = res[0]
+    # Filtrar valores None de los arrays
+    cursos_tomados = [curso for curso in (r.get("listaCursosTomados") or []) if curso.get("id") is not None]
+    cursos_interes = [curso for curso in (r.get("listaCursosInteres") or []) if curso.get("id") is not None]
+    
+    return {
+        "semestreId": r.get("semestreId"),
+        "listaCursosTomados": cursos_tomados,
+        "listaCursosInteres": cursos_interes
+    }
+
 def recomendationGenerate(studentId):
     rec = Recomendador(URI,AUTH)
 
