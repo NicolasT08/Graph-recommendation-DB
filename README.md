@@ -1,4 +1,4 @@
-#Graph Recommendation DB
+# Graph Recommendation DB
 
 Este proyecto implementa un sistema de recomendación basado en grafos utilizando Neo4j como base de datos y Python (FastAPI) como backend.
 
