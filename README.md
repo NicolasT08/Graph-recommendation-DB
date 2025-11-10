@@ -1,80 +1,109 @@
 # Graph Recommendation DB
 
-Este proyecto implementa un sistema de recomendación basado en grafos utilizando Neo4j como base de datos y Python (FastAPI) como backend.
+Este proyecto implementa un sistema de recomendación basado en grafos utilizando **Neo4j** como base de datos y **Python (FastAPI)** como backend.
 
+---
 
-⚙️ 1. Clonación del repositorio
+## ⚙️ 1. Clonación del repositorio
+
+```bash
 git clone https://github.com/NicolasT08/Graph-recommendation-DB.git
 cd Graph-recommendation-DB
+```
 
-🐳 2. Levantar el contenedor de Neo4j
+---
+
+## 🐳 2. Levantar el contenedor de Neo4j
 
 Ejecuta el siguiente comando para construir y levantar el contenedor:
 
+```bash
 docker-compose up -d
+```
 
+---
 
-Esto iniciará un contenedor de Neo4j 5.26 expuesto en los puertos:
-
-7474 → Interfaz web
-
-7687 → Conexión Bolt (usada por Python)
-
-🐍 3. Crear y activar el entorno virtual
+## 🐍 3. Crear y activar el entorno virtual
 
 En una nueva terminal, crea el entorno virtual y actívalo:
 
+```bash
 python3 -m venv venv
 source venv/bin/activate
+```
 
+> 💡 En Windows:
+> ```bash
+> venv\Scripts\activate
+> ```
 
-(En Windows: venv\Scripts\activate)
+---
 
-📦 4. Instalar las dependencias
+## 📦 4. Instalar las dependencias
+
+```bash
 pip install -r requirements.txt
+```
 
-🔗 5. Verificar la conexión a Neo4j
+---
+
+## 🔗 5. Verificar la conexión a Neo4j
 
 Ejecuta el script de conexión para comprobar que la base de datos está activa:
 
+```bash
 python3 src/connection.py
+```
 
+**Salida esperada:**
 
-Salida esperada:
-
+```
 Connected to Neo4j database successfully.
+```
 
-🧠 6. Ejecutar el sistema de recomendación
+---
 
-Corre el servicio principal:
+## 🧠 6. Ejecutar el sistema de recomendación
 
-python3 src/run_recommendation.py
+Para levantar la API (desarrollada en **FastAPI**), ejecuta directamente desde la raíz del proyecto:
 
-Deberías ver nuevamente:
+```bash
+uvicorn src.recommendationapi:app --reload
+```
 
-Connected to Neo4j database successfully.
+Esto iniciará el servidor local en el puerto **8000**.
 
-🌐 7. Acceder a la interfaz de Neo4j
+---
 
-Abre tu navegador en:
+## 🧩 10. Estructura del proyecto
 
-👉 http://localhost:7474/browser/
+```
+Graph-recommendation-DB/
+│
+├── docker-compose.yml
+├── requirements.txt
+├── README.md
+│
+├── neo4j/
+│   ├── data/
+│   ├── logs/
+│   ├── import/
+│   ├── plugins/
+│   └── init.sh
+│
+└── src/
+    ├── connection.py
+    ├── recommendation_service.py
+    ├── run_recommendation.py
+    └── recommendationapi.py
+```
 
-🔑 8. Ingresar las credenciales de acceso
-Usuario	Contraseña
-Esto te permitirá acceder al panel de Neo4j y visualizar los nodos y relaciones creados.
+---
 
-⚡ 9. Ejecutar la API de recomendación
+**Autores:**  
+Jose Luis Salamanca Lopez  
+Nicolás Samuel Tinjacá Topia  
+Dumar Hernan Malpica  
+Daniel Mauricio Vargas Cely
 
-Para levantar la API (desarrollada en FastAPI), ingresa a la carpeta src y ejecuta:
-
-cd src
-uvicorn recommendationapi:app --reload --port 8000
-
-Una vez corriendo, podrás acceder a:
-
-http://localhost:8000
- → Inicio de la API
-
-http://localhost:8000/docs
- → Documentación interactiva (Swagger UI)
+Proyecto académico — *Universidad Pedagógica y Tecnológica de Colombia (UPTC)*
