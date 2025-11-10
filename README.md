@@ -81,21 +81,22 @@ Esto iniciará el servidor local en el puerto **8000**.
 Graph-recommendation-DB/
 │
 ├── docker-compose.yml
+├── .gitignore
 ├── requirements.txt
 ├── README.md
 │
 ├── neo4j/
-│   ├── data/
-│   ├── logs/
 │   ├── import/
-│   ├── plugins/
+│   ├── neo4j/
+│   ├── init.cypher
 │   └── init.sh
 │
 └── src/
     ├── connection.py
     ├── recommendation_service.py
     ├── run_recommendation.py
-    └── recommendationapi.py
+    ├── recommendationapi.py
+    └── student_service.py
 ```
 
 ---
